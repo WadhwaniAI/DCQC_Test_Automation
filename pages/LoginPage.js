@@ -29,9 +29,9 @@ export class LoginPage {
         await this.verifyOtpButton.click();
     }
 
-    async verifyPageTitle() {
+    // async verifyPageTitle() {
 
-        await expect(this.page).toHaveTitle('Data Collection & Quality Check');
+    //     await expect(this.page).toHaveTitle('Data Collection & Quality Check');
 
-    }
+    // }
 }

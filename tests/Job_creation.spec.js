@@ -4,6 +4,7 @@ import { BASE_URL } from '../config/constants.js';
 import { login } from '../utils/login.js';
 import { JobCreationPage } from '../pages/JobCreationPage.js';
 
+
 test('Job Creation', async ({ page }) => {
     await page.goto(BASE_URL);
     await login(page);
