@@ -11,7 +11,7 @@ test('Job Creation', async ({ page }) => {
 
     const jobPage = new JobCreationPage(page);
 
-    await jobPage.startJobAndCollectData('CG_Gr_1-8_En_Para');
+    await jobPage.startJobAndCollectData();
     await jobPage.fillLocationAndProceed('Balrampur', '22260910001 - P.S. NEHRUNAGAR');
 
     const firstName = `User_${Date.now()}`;

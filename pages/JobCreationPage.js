@@ -25,6 +25,9 @@ export class JobCreationPage {
         this.generateConsentIdButton = page.getByRole('button', { name: 'Generate Consent ID' });
         this.takePhotoInput = page.locator("//p[contains(text(),'Take photo')]");
 
+        // Dashboard – Start job (second Start button)
+        this.startJobButton = page.locator("//p[text()='CG_Gr_1-8_En_Para']/following::button[text()='Start'][1]");
+
         // Recording
         this.startRecordingButton = page.getByRole('button', { name: 'Start' });
         this.stopRecordingButton = page.getByRole('button', { name: 'Stop' });
@@ -32,15 +35,6 @@ export class JobCreationPage {
         this.submitButtons = page.getByRole('button', { name: 'Submit' });
         this.audioFineCheckbox = page.getByLabel('Audio seems fine');
         this.successMessage = page.getByText('Record Saved Successfully', { exact: false });
-
-    }
-
-    // Helper: dynamic locator for start button by job title
-    getStartJobButton(jobTitle) {
-
-        return this.page.locator(
-            `//p[normalize-space()='${jobTitle}']/following-sibling::button[normalize-space()='Start']`
-        );
 
     }
 
@@ -54,14 +48,25 @@ export class JobCreationPage {
     }
 
     // —— Major feature: Start job and go to Collect Data ——
-    async startJobAndCollectData(jobTitle = 'CG_Gr_1-8_En_Para') {
+    async startJobAndCollectData() {
 
-        const startButton = this.getStartJobButton(jobTitle);
-        await expect(startButton).toBeEnabled({ timeout: 20000 });
+        await this.page.waitForTimeout(3000);
+        const startButton = this.startJobButton;
+
+        await expect(startButton).toBeVisible({ timeout: 10000 });
+        await expect(startButton).toBeEnabled({ timeout: 10000 });
+
+        await startButton.scrollIntoViewIfNeeded();
+
+        // trial click ensures element is actually clickable
+        await startButton.click({ trial: true });
         await startButton.click();
+
+        await expect(this.collectDataButton).toBeVisible({ timeout: 10000 });
         await this.collectDataButton.click();
 
     }
+
 
     // —— Major feature: Fill location (Proceed, Skip, District, School) and proceed ——
     async fillLocationAndProceed(district = 'Balrampur', school = '22260910001 - P.S. NEHRUNAGAR') {
@@ -109,7 +114,7 @@ export class JobCreationPage {
 
         await expect(this.submitButtons.first()).toBeEnabled();
         await this.submitButtons.first().click();
-        await this.audioFineCheckbox.check();
+        // await this.audioFineCheckbox.check();
         await expect(this.submitButtons).toBeEnabled({ timeout: submitTimeout });
         await this.submitButtons.click();
 

@@ -1,5 +1,6 @@
 
 export const BASE_URL = process.env.BASE_URL || 'https://dcqc-staging.wadhwaniai.org/';
+export const DASHBOARD_URL = process.env.DASHBOARD_URL || 'https://dcqc-staging.wadhwaniai.org/collector/jobs';
 
 
 export const LOGIN = {
